@@ -33,12 +33,20 @@ class SaveButtonWidget extends StatelessWidget {
               _firebaseServices.uploadText(
                   context: context,
                   text: provider.getTextBoxValue,
-                  imageUrl: value.isEmpty ? '' : value);
+                  imageUrl: value.isEmpty
+                      ? provider.getDataModel.imageUrl.isEmpty
+                          ? ''
+                          : provider.getDataModel.imageUrl
+                      : value);
             });
           }
         } else if (provider.getImageBox == false) {
           _firebaseServices.uploadText(
-              context: context, text: provider.getTextBoxValue, imageUrl: '');
+              context: context,
+              text: provider.getTextBoxValue,
+              imageUrl: provider.getDataModel.imageUrl.isEmpty
+                  ? ''
+                  : provider.getDataModel.imageUrl);
         }
       },
       child: Container(

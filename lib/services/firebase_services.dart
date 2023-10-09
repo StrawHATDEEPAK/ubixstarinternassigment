@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -61,7 +62,7 @@ class FirebaseServices {
         dev.log(value.data().toString(), name: 'data');
         if (value.data() != null) {
           Provider.of<WidgetBoolProvider>(context, listen: false)
-              .setData(value.data().toString());
+              .setData(jsonEncode(value.data()));
         }
       });
     } catch (e) {

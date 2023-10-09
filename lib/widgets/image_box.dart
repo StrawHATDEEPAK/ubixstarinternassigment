@@ -43,9 +43,14 @@ class _ImageBoxState extends State<ImageBox> {
             ),
             width: double.infinity,
             height: MediaQuery.of(context).size.height * 0.4,
-            child: provider.getDataModel.imageUrl.isNotEmpty
+            child: Provider.of<WidgetBoolProvider>(context, listen: true)
+                    .getDataModel
+                    .imageUrl
+                    .isNotEmpty
                 ? Image.network(
-                    provider.getDataModel.imageUrl,
+                    Provider.of<WidgetBoolProvider>(context, listen: true)
+                        .getDataModel
+                        .imageUrl,
                     fit: BoxFit.cover,
                   )
                 : image != null

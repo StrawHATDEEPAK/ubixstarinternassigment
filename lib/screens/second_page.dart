@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ubixstar_intern_assignment/screens/first_page.dart';
 import 'package:ubixstar_intern_assignment/util.dart';
 import 'package:ubixstar_intern_assignment/widgets/widget_select.dart';
 
@@ -45,7 +46,11 @@ class SecondPage extends StatelessWidget {
                   !provider.getTextBox) {
                 showSnackBar(context, 'Select atleast one widget');
               } else {
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FirstPage(),
+                    ));
               }
             },
             child: const Text(

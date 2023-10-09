@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ubixstar_intern_assignment/provider.dart';
+import 'dart:developer' as dev;
 
 class TextFieldWidget extends StatefulWidget {
   const TextFieldWidget({super.key});
@@ -13,6 +14,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   final TextEditingController _controller = TextEditingController();
   @override
   void initState() {
+    dev.log('textfiled init', name: 'TextFieldWidget');
     atStart();
     super.initState();
   }

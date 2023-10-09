@@ -17,11 +17,12 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
   final firebaseServices = FirebaseServices();
+
   @override
   void initState() {
-    dev.log('initState', name: 'FirstPage');
-    firebaseServices.getData(context: context);
     super.initState();
+    firebaseServices.getData(context: context);
+    dev.log('initState', name: 'FirstPage');
   }
 
   @override
