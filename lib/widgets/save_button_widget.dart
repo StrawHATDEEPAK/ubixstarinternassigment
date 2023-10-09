@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ubixstar_intern_assignment/provider.dart';
+import 'package:ubixstar_intern_assignment/services/firebase_services.dart';
 import 'package:ubixstar_intern_assignment/util.dart';
 
 class SaveButtonWidget extends StatelessWidget {
-  const SaveButtonWidget({super.key});
-
+  SaveButtonWidget({super.key});
+  FirebaseServices _firebaseServices = FirebaseServices();
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<WidgetBoolProvider>(context, listen: true);
@@ -15,6 +16,29 @@ class SaveButtonWidget extends StatelessWidget {
             !provider.getTextBox &&
             !provider.getImageBox) {
           showSnackBar(context, 'Add other widgets to save');
+        } else if (provider.getImageBox &&
+            provider.getSaveButton &&
+            provider.getTextBox) {
+          if (provider.getImageBoxValue == null &&
+              provider.getTextBoxValue.isEmpty) {
+            showSnackBar(context, 'Enter either value of image or text');
+          } else {
+            _firebaseServices
+                .uploadImage(
+                    context: context,
+                    image: provider.getImageBoxValue == null
+                        ? null
+                        : provider.getImageBoxValue!)
+                .then((value) {
+              _firebaseServices.uploadText(
+                  context: context,
+                  text: provider.getTextBoxValue,
+                  imageUrl: value.isEmpty ? '' : value);
+            });
+          }
+        } else if (provider.getImageBox == false) {
+          _firebaseServices.uploadText(
+              context: context, text: provider.getTextBoxValue, imageUrl: '');
         }
       },
       child: Container(

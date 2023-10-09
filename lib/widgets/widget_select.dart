@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../provider.dart';
 
 class SelectWidget extends StatefulWidget {
   final String title;
+  final bool value;
   const SelectWidget({
     Key? key,
     required this.title,
+    required this.value,
   }) : super(key: key);
 
   @override
@@ -15,6 +20,8 @@ class _SelectWidgetState extends State<SelectWidget> {
   bool value = false;
   @override
   Widget build(BuildContext context) {
+    value = widget.value;
+    final provider = Provider.of<WidgetBoolProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -22,7 +29,18 @@ class _SelectWidgetState extends State<SelectWidget> {
         children: [
           InkWell(
             onTap: () {
-              if (widget.title == 'TEXT BOX') {}
+              setState(() {
+                value = !value;
+              });
+              if (widget.title == 'TEXT BOX') {
+                provider.setTextBox(value);
+              }
+              if (widget.title == 'IMAGE BOX') {
+                provider.setImageBox(value);
+              }
+              if (widget.title == 'SAVE BUTTON') {
+                provider.setSaveButton(value);
+              }
             },
             child: Container(
               color: Colors.grey[400],

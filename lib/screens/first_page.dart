@@ -2,12 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ubixstar_intern_assignment/provider.dart';
 import 'package:ubixstar_intern_assignment/screens/second_page.dart';
+import 'package:ubixstar_intern_assignment/services/firebase_services.dart';
 import 'package:ubixstar_intern_assignment/widgets/image_box.dart';
 import 'package:ubixstar_intern_assignment/widgets/save_button_widget.dart';
 import 'package:ubixstar_intern_assignment/widgets/textfield_widget.dart';
+import 'dart:developer' as dev;
 
-class FirstPage extends StatelessWidget {
+class FirstPage extends StatefulWidget {
   const FirstPage({super.key});
+
+  @override
+  State<FirstPage> createState() => _FirstPageState();
+}
+
+class _FirstPageState extends State<FirstPage> {
+  final firebaseServices = FirebaseServices();
+  @override
+  void initState() {
+    dev.log('initState', name: 'FirstPage');
+    firebaseServices.getData(context: context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +52,7 @@ class FirstPage extends StatelessWidget {
                         : const SizedBox(),
                     provider.getImageBox ? const ImageBox() : const SizedBox(),
                     provider.getSaveButton
-                        ? const SaveButtonWidget()
+                        ? SaveButtonWidget()
                         : const SizedBox(),
                   ],
                 ),

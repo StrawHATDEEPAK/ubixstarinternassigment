@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:ubixstar_intern_assignment/provider.dart';
 
 class ImageBox extends StatefulWidget {
   const ImageBox({super.key});
@@ -10,18 +12,21 @@ class ImageBox extends StatefulWidget {
 }
 
 class _ImageBoxState extends State<ImageBox> {
+  String imageUrl = '';
   var _image;
   XFile? image;
   XFile? pickedFile;
   final picker = ImagePicker();
+
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<WidgetBoolProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () async {
           image = await picker.pickImage(source: ImageSource.gallery);
-
+          provider.setImageBoxValue(image);
           if (image != null) {
             setState(() {
               _image = File(image!.path);
@@ -38,12 +43,17 @@ class _ImageBoxState extends State<ImageBox> {
             ),
             width: double.infinity,
             height: MediaQuery.of(context).size.height * 0.4,
-            child: image != null
-                ? Image.file(
-                    _image,
+            child: provider.getDataModel.imageUrl.isNotEmpty
+                ? Image.network(
+                    provider.getDataModel.imageUrl,
                     fit: BoxFit.cover,
                   )
-                : const Icon(Icons.file_copy_rounded)),
+                : image != null
+                    ? Image.file(
+                        _image,
+                        fit: BoxFit.cover,
+                      )
+                    : const Icon(Icons.file_copy_rounded)),
       ),
     );
   }
