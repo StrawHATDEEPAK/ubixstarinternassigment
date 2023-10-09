@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:ubixstar_intern_assignment/first_page.dart';
+import 'package:provider/provider.dart';
+import 'package:ubixstar_intern_assignment/provider.dart';
+import 'package:ubixstar_intern_assignment/screens/first_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => WidgetBoolProvider(),
+      )
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
